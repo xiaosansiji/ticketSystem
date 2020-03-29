@@ -85,7 +85,7 @@ function getAdjacentSeat(m, n) {
 }
 
 function getSeats(size) {
-  var array = [];
+  const array = [];
   const m = getRandom(0, 26);
   const maxN = getSeatsCountByLine(m);
   const n = getRandom(0, maxN);
