@@ -44,25 +44,38 @@ const map = {
   1: seatArray,
 };
 
+// 判断是否连续
+function getContinuityCount(list) {
+  let continuityCount = 1;
+  for (let i = 0; i < list.length; i++) {
+    if (list[i] + 1 === list[i+1]) {
+      continuityCount++;
+    } else {
+      break;
+    }
+  }
+  return continuityCount;
+}
+
 function updataMap(size, list) {
   const target = map[size];
   const len = list.length;
   const start = target.findIndex(item => item === list[0]);
 
   if(start > -1) {
+    // 向后找连续座位，若不连续，则删除不连续部分
+    const nextContinuityCount = getContinuityCount(target.slice(start + len, start + len + size));
+    if(nextContinuityCount !== size) {
+      target.splice(start + len, nextContinuityCount);
+    }
+
     // 删除已经被分配的子组
     target.splice(start, len);
 
-    // 向后找连续座位，数量已经不满足当前数量限制，则删除
-    const next = target.slice(start + size);
-    if(next.length < size) {
-      target.splice(start);
-    }
-
-    // 向前找连续座位，数量已经不满足当前数量限制，则删除
-    const pre = target.slice(0, start);
-    if(pre.length < size) {
-      target.splice(0, list[0] - 1);
+    // 向前找连续座位，若不连续，则删除不连续部分
+    const preContinuityCount = getContinuityCount(target.slice(start - len, start));
+    if(preContinuityCount !== size) {
+      target.splice(start - preContinuityCount + 1, start - 1);
     }
   }
 }
@@ -110,9 +123,9 @@ function getSeats(size) {
 function test() {
   // 总售出票数
   let totalSelled = 0;
-  for(let n = 1; n <= 1300; n++) {
+  for(let n = 1; n <= 200; n++) {
     // 每次取票张数
-    const size = getRandom(1, 2);
+    const size = getRandom(1, 5);
     console.log(`***第 ${n} 次，本次购票 ${size} 张: ***`);
     const seats = getSeats(size);
     console.log(seats);
