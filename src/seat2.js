@@ -70,15 +70,32 @@ function updataMap(size, list) {
 function getSeats(size) {
   let list = [];
   const target = map[size];
-  const randomSeat = getRandom(0, target.length - 1);
-  if(randomSeat > target.length - size) {
-    // 由后向前获取连续座位
-    list = target.slice(randomSeat - size, randomSeat);
-  } else {
-    // 由前向后获取连续座位
-    list =  target.slice(randomSeat, randomSeat + size);
+  const randomSeatIndex = getRandom(0, target.length - 1);
+  const randomSeat = target[randomSeatIndex];
+  list.push(randomSeat);
+  
+  let isRight = true;
+  let leftStep = 1;
+  let rightStep = 1;
+  while(list.length < size) {
+    if(isRight) {
+      if(target[randomSeatIndex + rightStep ] === randomSeat + rightStep) {
+        list.push(target[randomSeatIndex + rightStep ]);
+        rightStep++;
+      } else {
+        isRight = false;
+      }
+    } else {
+      if(target[randomSeatIndex - leftStep ] === randomSeat - leftStep) {
+        list.push(target[randomSeatIndex - leftStep ]);
+        leftStep++;
+      } else {
+        isRight = true;
+      }
+    }
   }
 
+  list = list.sort((a, b) => a - b);
   if(list.length === size) {
     for(let n = 1; n <= 5; n++) {
       updataMap(size, list);
@@ -93,9 +110,9 @@ function getSeats(size) {
 function test() {
   // 总售出票数
   let totalSelled = 0;
-  for(let n = 1; n <= 800; n++) {
+  for(let n = 1; n <= 1300; n++) {
     // 每次取票张数
-    const size = getRandom(1, 5);
+    const size = getRandom(1, 2);
     console.log(`***第 ${n} 次，本次购票 ${size} 张: ***`);
     const seats = getSeats(size);
     console.log(seats);
