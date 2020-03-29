@@ -46,6 +46,7 @@ const map = {
 
 function updataMap(size, list) {
   const target = map[size];
+  // console.log(target.length);
   const len = list.length;
   const start = target.findIndex(item => item === list[0]);
 
@@ -91,17 +92,11 @@ function getSeats(size) {
 
 // 测试多次购票
 function test() {
-  // 总售出票数
-  let totalSelled = 0;
   for(let n = 1; n <= 800; n++) {
     // 每次取票张数
     const size = getRandom(1, 5);
     console.log(`***第 ${n} 次，本次购票 ${size} 张: ***`);
-    const seats = getSeats(size);
-    console.log(seats);
-    totalSelled += seats.length;
-    console.log(`已售出 ${totalSelled} 张票`);
-    console.log(`剩余 ${1950 - totalSelled} 张票`);
+    console.log(getSeats(size));
   }
 }
 test();
