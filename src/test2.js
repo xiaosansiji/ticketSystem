@@ -1,15 +1,10 @@
-//判断一串数字是否是连续的
-function isContinuity(list) {
-  let i = list[0];
-  let isContinuation = true;
-  for (const item of list) {
-    if (item !== i) {
-      isContinuation = false;
-      break;
-    }
-    i++;
+function getSeatsCountByLine(n) {
+  if (n === 1) {
+    return 50;
   }
-  return isContinuation;
+  return 50 + 2 * (n - 1);
 }
-
-console.log(isContinuity([1, 2, 3]));
+function getSeatsCountTotal(n) {
+  return (n * (50 + 50 + 2 * (n - 1))) / 2;
+}
+console.log(getSeatsCountTotal(17));
