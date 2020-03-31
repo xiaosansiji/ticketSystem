@@ -32,7 +32,7 @@ function getPostion(order) {
   // 98 * n + 2 * n * n = 2 * order;
   // 49 * n + n * n = order;
   const line = Math.ceil(calculate(1, 49, -order));
-  const column = getSeatsCountTotal(line) - order;
+  const column = order - getSeatsCountTotal(line - 1);
   return {
     line,
     column,

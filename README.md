@@ -9,6 +9,9 @@
 2.系统随机为用户分配座位。
 
 # 解题思路：
+## 分区
+分为 A、B、C、D 四个扇形区域，保证每次购票时选到的座位都在一个分区内（假设过道宽度很大）。
+
 ## 座位编号
 将每个扇形区域座位按照如下方式排序：
 ![image](https://user-images.githubusercontent.com/7600149/78037658-6b460780-739e-11ea-91a7-e31b2ede1083.png)
@@ -28,4 +31,4 @@
 
 ## 运行用例
 cd 到 src 目录；
-nodejs 环境下执行: `node index.js > result`
+nodejs 环境下执行: `node test.js > result`
